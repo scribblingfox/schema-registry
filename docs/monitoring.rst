@@ -3,15 +3,14 @@
 Monitoring |sr|
 ---------------
 
-|sr| reports a variety of metrics through JMX. It can also be configured to report
-stats using additional pluggable stats reporters using the ``metrics.reporters`` configuration
-option. The easiest way to view the available metrics is to use jconsole to
-browse JMX MBeans.
+|sr| reports a variety of metrics through JMX. View the available metrics by using jconsole to browse JMX MBeans. You can also use the ``metrics.reporters`` parameter to configure |sr| to report additional metrics. For more information about configuring |sr|, see [TOPIC-NAME-TK](URL-PATH-TO-RELATED-TOPIC-HERE).
 
-|sr| has two types of metrics. Global metrics help you monitor the overall health of
-the service. Per-endpoint metrics monitor each API endpoint request method and are
-prefixed by a name of the endpoint (e.g. ``subjects.get-schema``). These help you
-understand how the proxy is being used and track down specific performance problems.
+|sr| has two types of metrics: 
+* Global metrics help you monitor the overall health of
+the service. 
+* Per-endpoint metrics monitor each API endpoint request method. 
+
+These two metrics help you understand how the proxy is functioning and identify specific performance problems.
 
 Global Metrics
 ~~~~~~~~~~~~~~
@@ -25,13 +24,13 @@ MBean: kafka.schema.registry:type=jetty-metrics
 
 ``connections-accepted-rate`` (deprecated since 2.0)
     * In 1.x: The average rate per second of accepted TCP connections.
-    * In 2.x: Same as ``connections-opened-rate``.
+    * In 2.x: Same behavior as ``connections-opened-rate``.
 
 ``connections-opened-rate``
-    The average rate per second of opened TCP connections.
+    The average rate per second that TCP connections open.
 
 ``connections-closed-rate``
-    The average rate per second of closed TCP connections.
+    The average rate per second that TCP connections close.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 MBean: kafka.schema.registry:type=master-slave-role
@@ -45,54 +44,54 @@ MBean: kafka.schema.registry:type=master-slave-role
 Per-Endpoint Metrics
 ~~~~~~~~~~~~~~~~~~~~
 
-The following are the metrics available for each endpoint request method. Metrics for all
-requests are also aggregated into a global instance for each one. These aggregate instances have
-no prefix in their name.
+The following metrics are available for each endpoint request method. Metrics for all
+requests are also aggregated into a global instance. Each metric has a corresponding global instance. You can differentiate between global and individual instances because global instances have no prefix in their name.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 MBean: kafka.schema.registry:type=jersey-metrics
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``<endpoint>.request-byte-rate``
-    Bytes/second of incoming requests
+    The number of bytes per second for incoming requests.
 
 ``<endpoint>.request-error-rate``
-    The average number of requests per second that resulted in HTTP error responses
+    The average number of requests per second that resulted in HTTP error responses.
 
 ``<endpoint>.request-latency-avg``
-    The average request latency in ms
+    The average request latency in millseconds.
 
 ``<endpoint>.request-latency-max``
-    The maximum request latency in ms
+    The maximum request latency in millseconds.
 
 ``<endpoint>.request-rate``
     The average number of HTTP requests per second.
 
 ``<endpoint>.request-size-avg``
-    The average request size in bytes
+    The average request size in bytes.
 
 ``<endpoint>.request-size-max``
-    The maximum request size in bytes
+    The maximum request size in bytes.
 
 ``<endpoint>.response-byte-rate``
-    Bytes/second of outgoing responses
+    The number of bytes per second for outgoing responses.
 
 ``<endpoint>.response-rate``
     The average number of HTTP responses per second.
 
 ``<endpoint>.response-size-avg``
-    The average response size in bytes
+    The average response size in bytes.
 
 ``<endpoint>.response-size-max``
-    The maximum response size in bytes
+    The maximum response size in bytes.
 
 
 Endpoints
 ~~~~~~~~~
 
-The following is a list of all the API endpoint methods. The naming should map intuitively to
-each of the API operations. To create a full metric name, prefix a per-endpoint metric name with
-one of these values. For example, to find the rate of ``GET /brokers`` API calls, combine the
+The following is a list of all the API endpoint methods. To create a full metric name, prefix a per-endpoint metric name with
+one of these values. 
+
+For example, to find the rate of ``GET /brokers`` API calls, combine the
 endpoint name ``brokers.list`` with the metric name ``request-rate`` to get
 ``brokers.list.request-rate``.
 
